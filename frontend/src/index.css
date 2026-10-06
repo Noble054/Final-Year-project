@@ -1,0 +1,166 @@
+@import "tailwindcss";
+
+@theme {
+  --color-obsidian: #0B0D17;
+  --color-neonCyan: #00F2FE;
+  --color-electricPurple: #4FACFE;
+  
+  --font-sans: "Inter", sans-serif;
+  --font-heading: "Outfit", sans-serif;
+  
+  --animate-fade-in: fadeIn 0.5s ease-out;
+  --animate-slide-up: slideUp 0.5s ease-out;
+  --animate-pulse-glow: pulseGlow 2s infinite;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes slideUp {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 15px rgba(0, 242, 254, 0.3); }
+  50% { box-shadow: 0 0 25px rgba(0, 242, 254, 0.6); }
+}
+
+@layer base {
+  body {
+    @apply bg-obsidian text-white font-sans antialiased selection:bg-neonCyan selection:text-obsidian;
+    background-image: 
+      radial-gradient(circle at 15% 50%, rgba(79, 172, 254, 0.08), transparent 25%),
+      radial-gradient(circle at 85% 30%, rgba(0, 242, 254, 0.08), transparent 25%);
+    background-attachment: fixed;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-tight;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-[0_8px_32px_0_rgba(0,0,0,0.37)];
+  }
+  
+  .glass-card {
+    @apply bg-white/[0.03] backdrop-blur-md border border-white/5 rounded-xl transition-all duration-300 hover:bg-white/[0.05] hover:border-white/10 hover:-translate-y-1 hover:shadow-[0_10px_25px_-5px_rgba(0,0,0,0.3)];
+  }
+  
+  .btn-primary {
+    @apply relative overflow-hidden font-heading font-semibold tracking-wide text-obsidian bg-gradient-to-r from-[#00F2FE] to-[#4FACFE] rounded-xl px-6 py-3 transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,242,254,0.4)] hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none;
+  }
+  
+  .btn-secondary {
+    @apply relative overflow-hidden font-heading font-semibold tracking-wide text-white bg-white/10 border border-white/20 rounded-xl px-6 py-3 transition-all duration-300 hover:bg-white/20 hover:border-white/30 hover:scale-[1.02] active:scale-[0.98];
+  }
+  
+  .input-field {
+    @apply w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#00F2FE]/50 focus:border-[#00F2FE]/50 transition-all duration-300;
+  }
+}
+
+/* Custom Scrollbar for premium feel */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0B0D17; 
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2); 
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3); 
+}
+
+/* Custom Leaflet Popup Styles */
+.leaflet-popup-content-wrapper {
+  background: rgba(11, 13, 23, 0.9) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem !important;
+  color: white !important;
+  padding: 0 !important;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  width: 280px !important;
+}
+
+@media (max-width: 640px) {
+  .leaflet-popup-content {
+    width: 240px !important;
+  }
+}
+
+.leaflet-popup-tip {
+  background: rgba(11, 13, 23, 0.9) !important;
+}
+
+.user-location-marker {
+  position: relative;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+.user-location-marker__pulse {
+  position: absolute;
+  inset: 3px;
+  border: 2px solid #00f2fe;
+  border-radius: 999px;
+  animation: userLocationPulse 1.8s ease-out infinite;
+}
+
+.user-location-marker__dot {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 16px;
+  height: 16px;
+  border: 3px solid #ffffff;
+  border-radius: 999px;
+  background: #00a8ff;
+  box-shadow: 0 0 0 3px rgba(0, 168, 255, 0.35), 0 0 18px rgba(0, 242, 254, 0.9);
+}
+
+.user-location-tooltip {
+  background: #0b0d17 !important;
+  border: 1px solid rgba(0, 242, 254, 0.45) !important;
+  color: #00f2fe !important;
+  font-weight: 700;
+}
+
+@keyframes userLocationPulse {
+  0% { transform: scale(0.65); opacity: 0.9; }
+  70%, 100% { transform: scale(1.35); opacity: 0; }
+}
+
+.custom-popup .leaflet-popup-content {
+  padding: 0;
+}
+
+/* Scrollbar Hide Utility */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Leaflet Dark Theme Tiles & Container */
+.leaflet-container {
+  background: #0B0D17 !important;
+}
+
+.dark-map-tiles .leaflet-tile {
+  filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3) brightness(0.7);
+}
